@@ -24,7 +24,7 @@
             return $result[0];
         }
 
-        public function belongsToMany($t2, $tj, $pk_tJ1, $pk_tJ2, $pk, $pk_t2 = 'id') {
+        protected function belongsToMany($t2, $tj, $pk_tJ1, $pk_tJ2, $pk, $pk_t2 = 'id') {
             $sql = 'SELECT a.* FROM ' . $t2 . ' a ' . 
                 'JOIN ' . $tj . ' pa ON a.' . $pk_t2 . ' = pa.' . $pk_tJ2 . ' ' .
                 'JOIN ' . $this->table . ' p ON p.' . $pk_t2 . '=pa.' . $pk_tJ1 . ' AND p.' . $this->primary_key . ' = :id';
@@ -34,6 +34,18 @@
             ];
             return Db::execute($sql, $params);
         }
+
+        protected function hasMany($t2, $fk_t2, $pk) {
+            $sql = "SELECT t2.* FROM $t2 t2
+                    JOIN $this->table t1 ON t1.$this->primary_key = t2.$fk_t2
+                    AND t1.$this->primary_key = :id";
+                    
+            $params = [
+                ":id" => $pk
+            ];
+            return Db::execute($sql, $params);
+        }
+
 
         
         public static function __callStatic($name, $arguments) {

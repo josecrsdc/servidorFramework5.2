@@ -4,8 +4,14 @@
         $r->addRoute('GET', $basedir . '/', 'main@index');
         $r->addRoute('GET', $basedir . '/peliculas', 'Pelicula@getAll');
         $r->addRoute('GET', $basedir . '/peliculas/{id:\d+}', 'Pelicula@getById');
+        $r->addRoute('GET', $basedir . '/peliculas/{id:\d+}/criticas', 'Pelicula@criticas');
+        $r->addRoute('POST', $basedir . '/peliculas/{id:\d+}/criticas', 'Critica@insert');
+        $r->addRoute('GET', $basedir . '/peliculas/{id:\d+}/criticas/insertar', 'Critica@insertForm');
         $r->addRoute('GET', $basedir . '/directores/{id:\d+}', 'Director@getById');
         $r->addRoute('GET', $basedir . '/actores/{id:\d+}', 'Actor@getById');
+        $r->addRoute('GET', $basedir . '/criticas', 'Critica@getAll');
+        $r->addRoute('GET', $basedir . '/criticas/{id:\d+}', 'Critica@getById');
+        
     });
 
     // Fetch method and URI from somewhere
