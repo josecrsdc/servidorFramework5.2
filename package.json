@@ -1,0 +1,13 @@
+{
+  "name": "peliculas_estructura",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "npm run build && .\\scripts\\deploy.sh",
+    "build": ".\\scripts\\build.sh"
+  },
+  "author": "",
+  "license": "ISC"
+}

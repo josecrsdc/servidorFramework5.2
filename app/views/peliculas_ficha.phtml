@@ -1,0 +1,24 @@
+<?php
+    $v->layout('main', ['title' => 'Peliculas - Ficha']);
+    
+    echo "<b>Título: </b>" . $pelicula['titulo'] . "<br />";
+    echo "<b>Año: </b>" . $pelicula['anyo'] . "<br />";
+    echo "<b>Duración: </b>" . $pelicula['duracion'] . "<br />";
+    echo "<b>Directores: </b><br />";
+    echo "<ul>";
+    foreach ($directores as $director) {
+        echo '<li><a href="../directores/' . $director['id'] . '">';
+        echo $director['nombre'];
+        echo '</a><br />';
+    }
+    echo "</ul>";
+    
+    echo "<b>Actores: </b><br />";
+    echo "<ul>";
+    foreach ($actores as $actor) {
+        echo '<li><a href="../actores/' . $actor['id'] . '">';
+        echo $actor['nombre'];
+        echo '</a><br />';
+    }
+    echo "</ul>";
+?>

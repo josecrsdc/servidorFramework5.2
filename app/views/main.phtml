@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <title><?=$v($title)?></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+        <link rel="stylesheet" href="<?=$_ENV['APP_URL']?>/public/css/estilos.css">
+    </head>
+    <body>
+        <div class="alert alert-secondary d-flex">
+            <a href="<?=$_ENV['APP_URL']?>/peliculas" style="padding:8px;background-color: rgb(90, 87, 87);color:white;border-radius:4px;padding:8px 15px;">Peliculas</a>&nbsp;&nbsp;
+        </div>
+        <div style="text-align:center; padding:15px 0px 50px 0px">
+            <h4 style="margin:auto;"><?=$v($title)?></h4>
+        </div>
+        <div class="container">
+            <?=$v->section('content')?>
+        </div>
+    </body>
+</html>
