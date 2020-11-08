@@ -46,6 +46,11 @@
             return Db::execute($sql, $params);
         }
 
+        protected function insert() {
+            $result = Db::insert($this->table, $_POST);
+            return $result;
+        }
+
 
         
         public static function __callStatic($name, $arguments) {

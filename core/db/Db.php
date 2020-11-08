@@ -11,7 +11,10 @@ use core\db\Connection;
             $pdo = Connection::getInstance()::getPdo();
             $ps = $pdo->prepare($sql);
             $ps->execute($params);
-            return $ps->fetchAll(\PDO::FETCH_ASSOC);
+            $esInsert = explode(" ", $sql)[0];
+            if ($esInsert != "INSERT") {
+                return $ps->fetchAll(\PDO::FETCH_ASSOC);
+            }
         }
             
         private function select($table, $fields = ['*'], $where = null, $params = null) {
@@ -25,6 +28,22 @@ use core\db\Connection;
             if ($where != null) {
                 $sql .= " WHERE $where";
             }
+            return Db::execute($sql, $params);
+        }
+
+        protected function insert($table, $insertValues) {
+            $fields = '(';
+            $values = '(';
+            $params = array();
+            foreach ($insertValues as $key => $value) {
+                $fields .= $key . ',';
+                $param = ':' . $key;
+                $values .= $param . ',';
+                $params[$param] = $value;
+            }
+            $fields = \substr($fields, 0, -1) . ')';
+            $values = \substr($values, 0, -1) . ')';
+            $sql = "INSERT INTO $table $fields VALUES $values";
             return Db::execute($sql, $params);
         }
 
