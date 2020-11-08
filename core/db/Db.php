@@ -11,8 +11,9 @@ use core\db\Connection;
             $pdo = Connection::getInstance()::getPdo();
             $ps = $pdo->prepare($sql);
             $ps->execute($params);
-            $esInsert = explode(" ", $sql)[0];
-            if ($esInsert != "INSERT") {
+            $inicioSentencia = explode(" ", $sql)[0];
+            $tipoConsulta = ["INSERT", "UPDATE", "DELETE"];
+            if (!in_array($inicioSentencia, $tipoConsulta)) {
                 return $ps->fetchAll(\PDO::FETCH_ASSOC);
             }
         }
@@ -46,6 +47,32 @@ use core\db\Connection;
             $sql = "INSERT INTO $table $fields VALUES $values";
             return Db::execute($sql, $params);
         }
+
+        private function edit($table, $editValues, $pkName, $pkValue) {
+            $fields = '';
+            $params = array();
+            foreach ($editValues as $key => $value) {
+                if ($key !== '_method') {
+                    $fields .= "$key = :$key,";
+                    $param = ':' . $key;
+                    $params[$param] = $value;
+                }
+            }
+            $fields = \substr($fields, 0, -1);
+            $where = "$pkName = :id";
+            $params[":id"] = $pkValue;
+            $sql = "UPDATE $table SET $fields WHERE $where";
+            return $this->execute($sql, $params);
+        }
+
+        private function delete($table, $pkName, $pkValue) {
+            $params = array();
+            $where = "$pkName = :id";
+            $params[":id"] = $pkValue;
+            $sql = "DELETE FROM $table WHERE $where";
+            return $this->execute($sql, $params);
+        }
+            
 
         
         

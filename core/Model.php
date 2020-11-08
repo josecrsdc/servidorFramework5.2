@@ -51,6 +51,16 @@
             return $result;
         }
 
+        protected function edit($pk) {
+            $result = Db::edit($this->table, $_POST, $this->primary_key, $pk);
+            return $result;
+        }
+
+        protected function delete($pk) {
+            $result = Db::delete($this->table, $this->primary_key, $pk);
+            return $result;
+        }
+
 
         
         public static function __callStatic($name, $arguments) {

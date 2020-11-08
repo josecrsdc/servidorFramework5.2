@@ -11,11 +11,19 @@
         $r->addRoute('GET', $basedir . '/actores/{id:\d+}', 'Actor@getById');
         $r->addRoute('GET', $basedir . '/criticas', 'Critica@getAll');
         $r->addRoute('GET', $basedir . '/criticas/{id:\d+}', 'Critica@getById');
-        
+        $r->addRoute('GET', $basedir . '/peliculas/{id_pelicula:\d+}/criticas/editar/{id_critica:\d+}', 'Critica@editForm');
+        $r->addRoute('PUT', $basedir . '/peliculas/{id_pelicula:\d+}/criticas/{id_critica:\d+}', 'Critica@edit');
+        $r->addRoute('DELETE', $basedir . '/peliculas/{id_pelicula:\d+}/criticas/{id_critica:\d+}', 'Critica@delete');
     });
 
     // Fetch method and URI from somewhere
-    $httpMethod = $_SERVER['REQUEST_METHOD'];
+    //Ver si existe el campo _method para sobreescribir los métodos put y delete ya que los formularios sólo permiten POST y GET
+    $metodosPermitidos = ['GET', 'POST', 'PUT', 'DELETE'];
+    $httpMethod = strtoupper($_POST['_method']?? $_SERVER['REQUEST_METHOD']);
+    if(!in_array($httpMethod, $metodosPermitidos)) {
+    $httpMethod = 'GET';
+    }
+
     $uri = $_SERVER['REQUEST_URI'];
 
     // Strip query string (?foo=bar) and decode URI
